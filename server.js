@@ -1,37 +1,33 @@
-const port = 8080;
+// Server side code for Weather Journal project.
+
+// My project constants
+const servePort = 8080;
+let projectData = {}; // Object to hold API endpoint data
+
+// Set up express server and sisters
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const os = require('os');
 
-// Array to hold user data
-const appData = [];
-
+const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// get method needs first param as URL suffix and second method to
-// manipulate the response.
-// app.get('/', (request, response) => {
-//     response.send('hello world');
-// });
-
-app.get('/all', (request, response) => {
-    response.send(appData);
-});
-
-const addMovie = (req, res) => {
-    console.log(req.body);
-    appData.push(req.body);
-};
-
-// Basic POST request
-app.post('/addMovie', addMovie);
-
+// Server static webpage from website folder
 app.use(express.static('website'));
 
-const server = app.listen(port, () => {
-    console.log(`Running on localhost: ${port}`);
+const server = app.listen(servePort, _ => {
+    console.log(`Running on ${os.hostname().toLowerCase()}.local:${servePort}`);
 });
 
+app.get('/getData', (req, res) => {
+    console.log(`Sending data: ${projectData}`);
+    res.send(projectData);
+});
+
+app.post('/saveData', async (req, res) => {
+    projectData = req.body;
+    console.log(`Saved data: `, projectData);
+});
