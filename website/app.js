@@ -14,7 +14,6 @@ const presentErr = console.log; // Error presentation function
 
 // Method to post data to backend server
 const postData = async (url = '', data = {}) => {
-    console.log(`Posting data: `, data);
     try {
 	const response = await fetch(url, {
             method: 'POST',
@@ -71,7 +70,7 @@ document.getElementById('generate').addEventListener('click', ev => {
                       temperature: data.main.temp, date: newDate})
 	})
         .then(res => updateUi()) // Apparently the res arg is needed
-				 // for requests to happen in right order.
+				 // for requests to happen in right order.11
 	.catch(error => presentErr(`Miscellaneous app error: ${error}`));   
 });
 
