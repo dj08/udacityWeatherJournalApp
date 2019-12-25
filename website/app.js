@@ -21,10 +21,16 @@ const postData = async (url = '', data = {}) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    })
-	  .catch(error => {
-	      presentErr(`Failed to post to server: ${error}`);   
-	  });
+    });
+
+    try {
+        const newData = await response.json();
+        console.log(newData);
+        return newData
+    } catch(error) {
+	console.log("error", error);
+	// appropriately handle the error
+    }    
 };
 
 // Async GET function to query weather
