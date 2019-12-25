@@ -46,19 +46,8 @@ const getWeather = async (owmUrl, zip, apiKey) => {
 const uiUpdateHelper = (id, data) =>
       document.getElementById(id).innerHTML = data; 
 
-function sleep(milliseconds) { 
-    let timeStart = new Date().getTime(); 
-    while (true) { 
-      let elapsedTime = new Date().getTime() - timeStart; 
-      if (elapsedTime > milliseconds) { 
-        break; 
-      } 
-    } 
-  } 
-
 // Function to update UI after all else is done
 const updateUi = async () => {
-    // sleep(1000);
     const resp = await fetch('/getData');
     try {
         const savedData = await resp.json();
@@ -77,7 +66,6 @@ document.getElementById('generate').addEventListener('click', ev => {
     
     getWeather(owmApiUrl, zip, owmApiKey)
         .then((data) => {
-	    console.log("L1: ", data);
             postData('/saveData',
 		     {zip: zip, userFeelings: feelings,
                       temperature: data.main.temp, date: newDate})
