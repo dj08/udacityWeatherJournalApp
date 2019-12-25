@@ -83,9 +83,8 @@ document.getElementById('generate').addEventListener('click', ev => {
                       temperature: data.main.temp, date: newDate})
 	})
         .then(res => {
-	    // console.log("L2: ", res);
 	    updateUi();
 	})
-        //.catch(error => presentErr(`Miscellaneous app error: ${error}`));   
+	.catch(error => presentErr(`Miscellaneous app error: ${error}`));   
 });
 
