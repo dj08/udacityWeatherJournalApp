@@ -2,7 +2,7 @@
 
 // My project constants
 const servePort = 8080;
-let projectData = {}; // Object to hold API endpoint data
+let projectData = []; // Object to hold API endpoint data
 
 // Set up express server and sisters
 const express = require('express');
@@ -23,11 +23,11 @@ const server = app.listen(servePort, _ => {
 });
 
 app.get('/getData', (req, res) => {
-    console.log(`Sending data: ${projectData}`);
-    res.send(projectData);
+    console.log(`Sending data: `, projectData);
+    res.send(projectData.pop());
 });
 
 app.post('/saveData', async (req, res) => {
-    projectData = req.body;
+    projectData.push(req.body);
     console.log(`Saved data: `, projectData);
 });

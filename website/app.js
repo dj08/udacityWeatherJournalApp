@@ -24,15 +24,6 @@ const postData = async (url = '', data = {}) => {
 	},
 	body: JSON.stringify(data),
     });
-
-/*    try {
-	const newData = await response.json();
-	console.log(newData);
-	return newData;
-    } catch(error) {
-	presentErr(`Failed to save data: ${error}`);
-    };
-*/
 };
 
 // Async GET function to query weather
@@ -40,23 +31,19 @@ const getWeather = async (owmUrl, zip, apiKey) => {
     const apiResponse = await fetch(owmUrl(zip, apiKey));
     try {
 	const weather = await apiResponse.json();
-	console.log(weather);
 	return weather;
     } catch (error) { presentErr(`Failed to get weather: ${error}`) };
 };
 
-const uiUpdateHelper = (id, data) => {
-    console.log(id, data);
+// Need to update UI using vanilla JS as per rubric
+const uiUpdateHelper = (id, data) =>
     document.getElementById(id).innerHTML = data; 
-};
 
 // Function to update UI after all else is done
 const updateUi = async _ => {
     const resp = await fetch('/getData');
     try {
 	const savedData = await resp.json();
-	debugger;
-	console.log(savedData);
 	uiUpdateHelper('date', savedData.date);
 	uiUpdateHelper('temp', savedData.temperature);
 	uiUpdateHelper('content', savedData.userFeelings);
@@ -76,7 +63,7 @@ document.getElementById('generate').addEventListener('click', ev => {
 		       {zip: zip, userFeelings: feelings,
 			temperature: data.main.temp, date: newDate})
 	     )
-	.then(updateUi)
+	.then(updateUi())
 	.catch(error => presentErr(`Miscellaneous app error: ${error}`));   
 });
 

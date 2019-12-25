@@ -10,9 +10,9 @@ weather at a given zip code.
 The full rubric for the project is available [here](https://review.udacity.com/#!/rubrics/2655/view "Link to Udacity's Rubric for the project").
 
 Here is what I boiled down from the rubric:
-+ [ ] Install a backend server using Node/Express.
-  + [ ] Echo server feedback on command line.
-  + [ ] Use the OpenWeatherMap API
++ [X] Install a backend server using Node/Express.
+  + [X] Echo server feedback on command line.
+  + [X] Use the OpenWeatherMap API
 + [ ] Server code has:
   + [ ] `projectData` object. This acts as API endpoint.
   + [ ] OpenWeatherMap API key
