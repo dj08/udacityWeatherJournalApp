@@ -65,7 +65,7 @@ document.getElementById('generate').addEventListener('click', ev => {
     const feelings = document.getElementById('feelings').value;
     
     getWeather(owmApiUrl, zip, owmApiKey)
-        .then((data) => {
+        .then(data => {
             postData('/saveData',
 		     {zip: zip, userFeelings: feelings,
                       temperature: data.main.temp, date: newDate})
