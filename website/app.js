@@ -10,7 +10,7 @@ const owmApiUrl = (zip, apiKey) =>
 const d = new Date();
 const newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
-const presentErr = console.log;
+const presentErr = console.log; // Error presentation function
 
 // Method to post data to backend server
 const postData = async (url = '', data = {}) => {
@@ -21,7 +21,10 @@ const postData = async (url = '', data = {}) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-    });
+    })
+	  .catch(error => {
+	      presentErr(`Failed to post to server: ${error}`);   
+	  });
 };
 
 // Async GET function to query weather
@@ -35,7 +38,7 @@ const getWeather = async (owmUrl, zip, apiKey) => {
 
 // Need to update UI using vanilla JS as per rubric
 const uiUpdateHelper = (id, data) =>
-    document.getElementById(id).innerHTML = data; 
+      document.getElementById(id).innerHTML = data; 
 
 // Function to update UI after all else is done
 const updateUi = async _ => {
@@ -49,7 +52,7 @@ const updateUi = async _ => {
         presentErr(`Failed to update UI: ${error}`);
     }
 };
-      
+
 // Event listener for the generate button
 document.getElementById('generate').addEventListener('click', ev => {
     const zip = document.getElementById('zip').value;
