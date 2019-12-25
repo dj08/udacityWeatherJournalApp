@@ -14,23 +14,23 @@ const presentErr = console.log; // Error presentation function
 
 // Method to post data to backend server
 const postData = async (url = '', data = {}) => {
-    const response = await fetch(url, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-
+    console.log(`Posting data: `, data);
     try {
+	const response = await fetch(url, {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+		'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+	});
         const newData = await response.json();
         console.log(newData);
         return newData
     } catch(error) {
 	console.log("error", error);
 	// appropriately handle the error
-    }    
+    }; 
 };
 
 // Async GET function to query weather
@@ -46,8 +46,19 @@ const getWeather = async (owmUrl, zip, apiKey) => {
 const uiUpdateHelper = (id, data) =>
       document.getElementById(id).innerHTML = data; 
 
+function sleep(milliseconds) { 
+    let timeStart = new Date().getTime(); 
+    while (true) { 
+      let elapsedTime = new Date().getTime() - timeStart; 
+      if (elapsedTime > milliseconds) { 
+        break; 
+      } 
+    } 
+  } 
+
 // Function to update UI after all else is done
-const updateUi = async _ => {
+const updateUi = async () => {
+    // sleep(1000);
     const resp = await fetch('/getData');
     try {
         const savedData = await resp.json();
@@ -63,14 +74,18 @@ const updateUi = async _ => {
 document.getElementById('generate').addEventListener('click', ev => {
     const zip = document.getElementById('zip').value;
     const feelings = document.getElementById('feelings').value;
-
+    
     getWeather(owmApiUrl, zip, owmApiKey)
-        .then(data =>
-              postData('/saveData',
-                       {zip: zip, userFeelings: feelings,
-                        temperature: data.main.temp, date: newDate})
-             )
-        .then(updateUi())
-        .catch(error => presentErr(`Miscellaneous app error: ${error}`));   
+        .then((data) => {
+	    console.log("L1: ", data);
+            postData('/saveData',
+		     {zip: zip, userFeelings: feelings,
+                      temperature: data.main.temp, date: newDate})
+	})
+        .then(res => {
+	    // console.log("L2: ", res);
+	    updateUi();
+	})
+        //.catch(error => presentErr(`Miscellaneous app error: ${error}`));   
 });
 
