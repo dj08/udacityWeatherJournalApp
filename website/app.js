@@ -70,9 +70,8 @@ document.getElementById('generate').addEventListener('click', ev => {
 		     {zip: zip, userFeelings: feelings,
                       temperature: data.main.temp, date: newDate})
 	})
-        .then(res => {
-	    updateUi();
-	})
+        .then(res => updateUi()) // Apparently the res arg is needed
+				 // for requests to happen in right order.
 	.catch(error => presentErr(`Miscellaneous app error: ${error}`));   
 });
 
