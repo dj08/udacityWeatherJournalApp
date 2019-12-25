@@ -14,8 +14,6 @@ const presentErr = console.log;
 
 // Method to post data to backend server
 const postData = async (url = '', data = {}) => {
-    console.log(`Logging at start: `, data);
-
     const response = await fetch(url, {
 	method: 'POST',
 	credentials: 'same-origin',
